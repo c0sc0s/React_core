@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin,": "link:@typescript-eslint/eslint-plugin,",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
+  }
 }
