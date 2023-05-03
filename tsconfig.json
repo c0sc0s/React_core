@@ -1,21 +1,24 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "strict": true,
-    "lib":["ESNext","es2015","DOM"],
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "baseUrl": "./packages"
-  },
-  "exclude": ["node_modules", "**/*.spec.ts"]
+	"compileOnSave": true,
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"strict": true,
+		"lib": ["ESNext", "es2015", "DOM"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"sourceMap": true,
+		"baseUrl": "./packages",
+		"paths": {
+			"hostConfig": ["./react-reconciler/src/hostConfig.ts"]
+		}
+	},
+	"exclude": ["node_modules", "**/*.spec.ts"]
 }

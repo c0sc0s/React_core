@@ -19,13 +19,15 @@ const ReactElement = (
 		type,
 		key,
 		ref,
-		props
+		props,
+		__mark: "cosine"
 	};
 
 	return element;
 };
 
 export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
+	// 组装
 	let key: Key = null;
 	const props: Props = {};
 	let ref: Ref = null;
@@ -64,3 +66,5 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
 };
 
 export const jsxDEV = jsx;
+
+// 虚拟dom --> 真实dom

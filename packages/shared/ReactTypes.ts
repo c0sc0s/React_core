@@ -11,3 +11,5 @@ export type ReactElementType = {
 	ref: Ref;
 	props: Props;
 };
+
+export type Action<State> = State | ((preState: State) => State);
