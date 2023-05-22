@@ -44,7 +44,7 @@ importers:
   packages/react-reconciler:
     dependencies:
       shared:
-        specifier: 'workspace: *'
+        specifier: 'workspacce: *'
         version: link:../shared
 
   packages/shared: {}

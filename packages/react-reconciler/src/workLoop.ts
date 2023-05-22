@@ -1,14 +1,27 @@
 import { beginWork } from "./beginWork";
 import { completeWork } from "./completeWork";
-import { FiberNode } from "./fiber";
+import { FiberNode, FiberRootNode, createWorkInProgress } from "./fiber";
 
 let workInProgress: FiberNode | null = null;
 
-function prepareFreshStack(fiber) {
-	workInProgress = fiber;
+function prepareFreshStack(fiber: FiberRootNode) {
+	workInProgress = createWorkInProgress(fiber.current, {});
 }
 
-function renderRoot(root: FiberNode) {
+function markUpdarteFromFiberToRoot(fiber: FiberNode): FiberRootNode {
+	while (fiber.return) {
+		fiber = fiber.return;
+	}
+
+	return fiber.stateNode;
+}
+
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	const root = markUpdarteFromFiberToRoot(fiber);
+	renderRoot(root);
+}
+
+function renderRoot(root: FiberRootNode) {
 	prepareFreshStack(root);
 
 	do {
