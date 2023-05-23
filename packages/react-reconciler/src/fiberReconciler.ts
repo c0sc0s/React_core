@@ -20,6 +20,7 @@ export function updateContainer(
 ) {
 	const hostRootFiber = root.current;
 
+	// mount阶段，element作为 Update 的 action
 	const update = createUpdate<ReactElementType | null>(element);
 
 	enqueueUpdate(update, hostRootFiber.updateQueue!);
