@@ -17,13 +17,14 @@ export class FiberNode {
 	index: number;
 
 	ref: Ref;
+
 	memoizedProps: Props | null;
 	memoizedState: any;
 	alternate: FiberNode | null;
 	flags: number;
 	updateQueue: UpdateQueue<any> | null;
-
 	subtreeFlags: number;
+	deletions: Array<FiberNode> | null;
 
 	constructor(tag: WorkTag, pendingProps: Props, key: Key) {
 		this.tag = tag;
@@ -45,6 +46,7 @@ export class FiberNode {
 		this.flags = NoFlags;
 		this.subtreeFlags = NoFlags;
 		this.updateQueue = null;
+		this.deletions = null;
 	}
 }
 
@@ -77,13 +79,16 @@ export const createWorkInProgress = (
 	} else {
 		// update
 		wip.pendingProps = pendingProps;
-		// 清除之前的副作用
+		wip.deletions = null;
+		wip.subtreeFlags = NoFlags;
 		wip.flags = NoFlags;
 	}
 
 	wip.type = current.type;
+	wip.child = current.child;
 	wip.updateQueue = current.updateQueue;
-
+	wip.memoizedProps = current.memoizedProps;
+	wip.memoizedState = current.memoizedState;
 	return wip;
 };
 
