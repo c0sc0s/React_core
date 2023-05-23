@@ -1,7 +1,13 @@
 import { mountChildFibers, reconcileChildFibers } from "./childFibers";
 import { FiberNode, FiberRootNode } from "./fiber";
+import { renderWithHooks } from "./fiberHooks";
 import { processUpdateQueue } from "./updateQueue";
-import { HostComponent, HostRoot, HostText } from "./workTags";
+import {
+	FunctionComponent,
+	HostComponent,
+	HostRoot,
+	HostText
+} from "./workTags";
 
 /**
  * beginWork 会根据 wip.tag 调用不同的 update 方法
@@ -19,6 +25,8 @@ export const beginWork = (wip: FiberNode) => {
 			return updateHostRoot(wip);
 		case HostText:
 			return null;
+		case FunctionComponent:
+			return updateFunctionComponent(wip);
 		default:
 			if (__DEV__) {
 				console.error("unknow fiber tag");
@@ -55,6 +63,14 @@ function updateHostRoot(wip: FiberNode) {
 	// 所以说，这行才是核心嘛
 	reconcileChildren(wip, nextChildren);
 
+	return wip.child;
+}
+
+function updateFunctionComponent(wip: FiberNode) {
+	const nextProps = wip.pendingProps;
+	const nextChildren = renderWithHooks(wip);
+
+	reconcileChildFibers(wip, nextChildren);
 	return wip.child;
 }
 

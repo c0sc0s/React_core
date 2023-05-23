@@ -1,6 +1,8 @@
 import { beginWork } from "./beginWork";
+import { commitMutationEffects } from "./commitWork";
 import { completeWork } from "./completeWork";
 import { FiberNode, FiberRootNode, createWorkInProgress } from "./fiber";
+import { MutationMask, NoFlags } from "./fiberFlags";
 
 let workInProgress: FiberNode | null = null;
 
@@ -48,7 +50,29 @@ function renderRoot(root: FiberRootNode) {
 	commitRoot(root);
 }
 
-function commitRoot(root: FiberRootNode) {}
+function commitRoot(root: FiberRootNode) {
+	const finishedWork = root.finishedWork;
+	root.finishedWork = null;
+
+	if (finishedWork === null) {
+		return;
+	}
+
+	const subTreeHasEffects =
+		(finishedWork?.subtreeFlags & MutationMask) !== NoFlags;
+
+	const rootHasEffects = (finishedWork.flags & MutationMask) !== NoFlags;
+
+	if (subTreeHasEffects || rootHasEffects) {
+		// beforeMutation
+		// mutation
+		commitMutationEffects(finishedWork);
+		root.current = finishedWork;
+		// layout
+	} else {
+		root.current = finishedWork;
+	}
+}
 
 function workLoop() {
 	while (workInProgress !== null) {
